@@ -4,5 +4,5 @@ export const router = express.Router();
 
 // Returns index
 router.get('/', (req: express.Request, res: express.Response) => {
-    res.send('Oispa huone - backend!');
+    res.send('Oispa huone - backend! V2');
 });

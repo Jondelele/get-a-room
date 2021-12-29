@@ -1,8 +1,8 @@
 import express from 'express';
 import unless from 'express-unless';
-import { getOAuthClient } from './utils/oAuthClient';
+// import { getOAuthClient } from './utils/oAuthClient';
 import * as responses from './utils/responses';
-import { readToken, updateToken } from './controllers/auth/token';
+// import { readToken, updateToken } from './controllers/auth/token';
 
 /**
  * Filter for unless
@@ -36,30 +36,30 @@ export const parseToken = () => {
         next: express.NextFunction
     ) => {
         try {
-            const { TOKEN } = req.cookies;
-
-            if (!TOKEN) {
-                return responses.invalidToken(req, res);
-            }
-
-            const payload = readToken(TOKEN);
-
-            if (!payload.refreshToken) {
-                return responses.invalidToken(req, res);
-            }
-
-            res.locals.token = TOKEN;
-            res.locals.sub = payload.sub;
-            res.locals.email = payload.email;
-            res.locals.refreshToken = payload.refreshToken;
-            res.locals.accessToken = payload.accessToken;
-
+            //         const { TOKEN } = req.cookies;
+            //
+            //         if (!TOKEN) {
+            //             return responses.invalidToken(req, res);
+            //         }
+            //
+            //         const payload = readToken(TOKEN);
+            //
+            //         if (!payload.refreshToken) {
+            //             return responses.invalidToken(req, res);
+            //         }
+            //
+            //         res.locals.token = TOKEN;
+            //         res.locals.sub = payload.sub;
+            //         res.locals.email = payload.email;
+            //         res.locals.refreshToken = payload.refreshToken;
+            //         res.locals.accessToken = payload.accessToken;
+            //
             next();
         } catch (err) {
             return responses.invalidToken(req, res);
         }
     };
-
+    //
     middleware.unless = unless;
 
     return middleware;
@@ -78,36 +78,36 @@ export const validateAccessToken = () => {
         next: express.NextFunction
     ) => {
         try {
-            const client = getOAuthClient();
-
-            client.setCredentials({
-                access_token: res.locals.accessToken,
-                refresh_token: res.locals.refreshToken
-            });
-
-            const newToken = (await client.getAccessToken()).token;
-
-            if (!newToken) {
-                return responses.invalidToken(req, res);
-            }
-
-            // Token had expired
-            if (res.locals.accessToken !== newToken) {
-                res.locals.accessToken = newToken;
-                const jwt = updateToken(res.locals.token, newToken as string);
-
-                res.cookie('TOKEN', jwt, {
-                    maxAge: 31556952000, // 1 year
-                    httpOnly: true
-                });
-
-                client.setCredentials({
-                    access_token: res.locals.accessToken,
-                    refresh_token: res.locals.refreshToken
-                });
-            }
-
-            res.locals.oAuthClient = client;
+            // const client = getOAuthClient();
+            //
+            // client.setCredentials({
+            //     access_token: res.locals.accessToken,
+            //     refresh_token: res.locals.refreshToken
+            // });
+            //
+            // const newToken = (await client.getAccessToken()).token;
+            //
+            // if (!newToken) {
+            //     return responses.invalidToken(req, res);
+            // }
+            //
+            // // Token had expired
+            // if (res.locals.accessToken !== newToken) {
+            //     res.locals.accessToken = newToken;
+            //     const jwt = updateToken(res.locals.token, newToken as string);
+            //
+            //     res.cookie('TOKEN', jwt, {
+            //         maxAge: 31556952000, // 1 year
+            //         httpOnly: true
+            //     });
+            //
+            //     client.setCredentials({
+            //         access_token: res.locals.accessToken,
+            //         refresh_token: res.locals.refreshToken
+            //     });
+            // }
+            //
+            // res.locals.oAuthClient = client;
             next();
         } catch {
             return responses.invalidToken(req, res);
