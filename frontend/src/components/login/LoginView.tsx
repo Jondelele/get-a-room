@@ -1,5 +1,4 @@
 import { Box, Stack, Typography } from '@mui/material';
-import GoogleLogin from './GoogleLogin';
 import { ReactComponent as DuckLogo } from './duck.svg';
 
 const LoginView = () => {
@@ -20,9 +19,6 @@ const LoginView = () => {
                         height="12rem"
                         title="Vincit logo"
                     />
-                </Box>
-                <Box textAlign="center">
-                    <GoogleLogin />
                 </Box>
             </Stack>
         </Box>
