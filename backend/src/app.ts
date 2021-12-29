@@ -4,9 +4,9 @@ import helmet from 'helmet';
 import cors, { CorsOptions } from 'cors';
 import cookieParser from 'cookie-parser';
 import 'dotenv/config';
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 
-import { authFilter, parseToken, validateAccessToken } from './authMiddleware';
+// import { authFilter, parseToken, validateAccessToken } from './authMiddleware';
 import { checkEnvVariables } from './utils/checkEnvVariables';
 // import { getDatabaseUrl } from './utils/config';
 
